@@ -15,28 +15,6 @@ namespace UOCRevisited
     internal static class BuildingManagerHooks
     {
         /// <summary>
-        ///  Deploy event hooks for when the building manager creates and releases buildings.
-        /// </summary>
-        internal static void Deploy()
-        {
-            // Revert hooks if already applied.
-            Revert();
-
-            // Add hooks.
-            BuildingManager.instance.EventBuildingCreated += OnBuildingCreated;
-            BuildingManager.instance.EventBuildingReleased += OnBuildingReleased;
-        }
-
-        /// <summary>
-        /// Removes event hooks.
-        /// </summary>
-        internal static void Revert()
-        {
-            BuildingManager.instance.EventBuildingCreated -= OnBuildingCreated;
-            BuildingManager.instance.EventBuildingReleased -= OnBuildingReleased;
-        }
-
-        /// <summary>
         /// Event hook for BuildingManager.EventBuildingCreated.
         /// This makes sure that transport station AI buildings are 'aware' of the new connections and will create transport lines to and/or from them as appropriate.
         /// </summary>
@@ -73,7 +51,7 @@ namespace UOCRevisited
 
                     // Create connection line to/from new outside connection.
                     buildingBuffer[buildingID].m_flags |= Building.Flags.IncomingOutgoing;
-                    TransportStationAIPatch.CreateConnectionLines(stationAI, buildingID, ref buildingBuffer[buildingID]);
+                    Patches.TransportStationAIPatch.CreateConnectionLines(stationAI, buildingID, ref buildingBuffer[buildingID]);
 
                     // Release building's existing service vehicles.
                     BuildingUtil.ReleaseOwnVehicles(serviceID);
@@ -120,6 +98,28 @@ namespace UOCRevisited
 
             // Release any other vehicles heading to/from this (now-demolished) connection.
             BuildingUtil.ReleaseTargetedVehicles(buildingID);
+        }
+
+        /// <summary>
+        ///  Deploy event hooks for when the building manager creates and releases buildings.
+        /// </summary>
+        internal static void Deploy()
+        {
+            // Revert hooks if already applied.
+            Revert();
+
+            // Add hooks.
+            BuildingManager.instance.EventBuildingCreated += OnBuildingCreated;
+            BuildingManager.instance.EventBuildingReleased += OnBuildingReleased;
+        }
+
+        /// <summary>
+        /// Removes event hooks.
+        /// </summary>
+        internal static void Revert()
+        {
+            BuildingManager.instance.EventBuildingCreated -= OnBuildingCreated;
+            BuildingManager.instance.EventBuildingReleased -= OnBuildingReleased;
         }
     }
 }

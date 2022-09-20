@@ -6,7 +6,6 @@
 namespace EightyOne2
 {
     using AlgernonCommons.Patching;
-    using ColossalFramework.UI;
     using ICities;
 
     /// <summary>
@@ -42,5 +41,5 @@ namespace EightyOne2
         public override void LoadSettings()
         {
         }
-}
+    }
 }

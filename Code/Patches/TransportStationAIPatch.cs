@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 
-namespace UOCRevisited
+namespace UOCRevisited.Patches
 {
     using System;
     using System.Runtime.CompilerServices;
@@ -24,7 +24,7 @@ namespace UOCRevisited
         /// <param name="data">Building data.</param>
         /// <exception cref="NotImplementedException">Harmony reverse patch wasn't applied.</exception>
         [HarmonyReversePatch]
-        [HarmonyPatch((typeof(TransportStationAI)), "CreateConnectionLines")]
+        [HarmonyPatch(typeof(TransportStationAI), "CreateConnectionLines")]
         [HarmonyPatch(new Type[] { typeof(ushort), typeof(Building) },
             new ArgumentType[] { ArgumentType.Normal, ArgumentType.Ref })]
         [MethodImpl(MethodImplOptions.NoInlining)]

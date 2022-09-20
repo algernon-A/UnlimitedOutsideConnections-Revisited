@@ -1,4 +1,4 @@
-﻿// <copyright file="BuildingManagerHooks.cs" company="algernon (K. Algernon A. Sheppard)">
+﻿// <copyright file="BuildingUtil.cs" company="algernon (K. Algernon A. Sheppard)">
 // Copyright (c) algernon (K. Algernon A. Sheppard), BloodyPenguin (Egor Aralov). All rights reserved.
 // Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -16,8 +16,8 @@ namespace UOCRevisited
         /// <summary>
         /// Returns a list of all service buildings matching the specified outside connection.
         /// </summary>
-        /// <param name="connectionBuildingID"></param>
-        /// <returns>New list of service buildings (empty list if none)</returns>
+        /// <param name="connectionBuildingID">Outside connection building ID.</param>
+        /// <returns>New list of service buildings (empty list if none).</returns>
         public static IEnumerable<ushort> FindServiceBuildings(uint connectionBuildingID)
         {
             // Return list.
@@ -78,6 +78,7 @@ namespace UOCRevisited
             {
                 return;
             }
+
             var ai = BuildingManager.instance.m_buildings.m_buffer[buildingID].Info?.m_buildingAI;
             if (ai == null)
             {
@@ -95,7 +96,6 @@ namespace UOCRevisited
                     instance.ReleaseVehicle(i);
                 }
             }
-
         }
 
         /// <summary>
@@ -108,6 +108,7 @@ namespace UOCRevisited
             {
                 return;
             }
+
             var data = BuildingManager.instance.m_buildings.m_buffer[buildingID];
             var buildingInfo = data.Info;
             var ai = buildingInfo?.m_buildingAI;
@@ -125,8 +126,11 @@ namespace UOCRevisited
                 {
                     VehicleInfo info = instance.m_vehicles.m_buffer[(int)vehicleID].Info;
                     if (info.m_class.m_service == buildingInfo.m_class.m_service && info.m_class.m_subService == buildingInfo.m_class.m_subService)
+                    {
                         info.m_vehicleAI.SetTarget(vehicleID, ref instance.m_vehicles.m_buffer[(int)vehicleID], (ushort)0);
+                    }
                 }
+
                 vehicleID = instance.m_vehicles.m_buffer[(int)vehicleID].m_nextOwnVehicle;
                 if (++num > 16384)
                 {
