@@ -1,4 +1,11 @@
-﻿Version 1.0.1 -
+﻿Version 1.1 -
+
+- Rewrite for game version 1.15
+- Refactor remaining legacy code
+- Implement AlgernonCommons
+
+
+Version 1.0.1 -
 
 - Fix situational 'argument cannot be null' Linq error when attempting to find service buildings
 - Fix intercity buses not recognizing new connections
