@@ -11,14 +11,14 @@ namespace UOCRevisited
     /// <summary>
     /// Building utilities.
     /// </summary>
-    public static class BuildingUtil
+    internal static class BuildingUtil
     {
         /// <summary>
         /// Returns a list of all service buildings matching the specified outside connection.
         /// </summary>
         /// <param name="connectionBuildingID">Outside connection building ID.</param>
         /// <returns>New list of service buildings (empty list if none).</returns>
-        public static IEnumerable<ushort> FindServiceBuildings(uint connectionBuildingID)
+        internal static IEnumerable<ushort> FindServiceBuildings(uint connectionBuildingID)
         {
             // Return list.
             List<ushort> buildingList = new List<ushort>();
@@ -74,7 +74,7 @@ namespace UOCRevisited
         /// Releases any vehicles travelling to/from the given building.
         /// </summary>
         /// <param name="buildingID">Bulding ID.</param>
-        public static void ReleaseTargetedVehicles(ushort buildingID)
+        internal static void ReleaseTargetedVehicles(ushort buildingID)
         {
             // Valid building check.
             if (buildingID == 0)
@@ -109,7 +109,7 @@ namespace UOCRevisited
         /// Done this way (instead of straight release) to properly handle dummy traffic.
         /// </summary>
         /// <param name="buildingID">Bulding ID.</param>
-        public static void ReleaseOwnVehicles(ushort buildingID)
+        internal static void ReleaseOwnVehicles(ushort buildingID)
         {
             // Valid building check.
             if (buildingID == 0)

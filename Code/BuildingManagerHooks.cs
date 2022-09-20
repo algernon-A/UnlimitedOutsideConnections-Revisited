@@ -12,7 +12,7 @@ namespace UOCRevisited
     /// <summary>
     /// Event hooks for the building manager.
     /// </summary>
-    internal static class BuildingManagerHooks
+    public static class BuildingManagerHooks
     {
         /// <summary>
         /// Event hook for BuildingManager.EventBuildingCreated.
