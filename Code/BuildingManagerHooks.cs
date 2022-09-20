@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-using ColossalFramework;
-using ColossalFramework.Math;
-using UOCRevisited.Patches;
-
+﻿// <copyright file="BuildingManagerHooks.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard), BloodyPenguin (Egor Aralov). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
 
 namespace UOCRevisited
 {
+    using System.Collections.Generic;
+    using AlgernonCommons;
+    using ColossalFramework;
+
     /// <summary>
     /// Event hooks for the building manager.
     /// </summary>
@@ -24,7 +27,6 @@ namespace UOCRevisited
             BuildingManager.instance.EventBuildingReleased += OnBuildingReleased;
         }
 
-
         /// <summary>
         /// Removes event hooks.
         /// </summary>
@@ -34,12 +36,11 @@ namespace UOCRevisited
             BuildingManager.instance.EventBuildingReleased -= OnBuildingReleased;
         }
 
-
         /// <summary>
         /// Event hook for BuildingManager.EventBuildingCreated.
         /// This makes sure that transport station AI buildings are 'aware' of the new connections and will create transport lines to and/or from them as appropriate.
         /// </summary>
-        /// <param name="buildingID">ID of created building</param>
+        /// <param name="buildingID">ID of created building.</param>
         public static void OnBuildingCreated(ushort buildingID)
         {
             // Local ref.
@@ -80,12 +81,11 @@ namespace UOCRevisited
             }
         }
 
-
         /// <summary>
         /// Event hook for BuildingManager.EventBuildingReleased.
         /// This removes transport lines from station AI buildings to the now-demolished connection.
         /// </summary>
-        /// <param name="buildingID">ID of demolished building</param>
+        /// <param name="buildingID">ID of demolished building.</param>
         public static void OnBuildingReleased(ushort buildingID)
         {
             // Local ref.

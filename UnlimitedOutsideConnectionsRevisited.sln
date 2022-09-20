@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnlimitedOutsideConnectionsRevisited", "UnlimitedOutsideConnectionsRevisited.csproj", "{A1D7207D-1E7D-4DC4-ABA7-B55B00917FAD}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AlgernonCommonsPatchingShared", "..\AlgernonCommons\AlgernonCommonsPatchingShared.shproj", "{25AEF446-6F0D-43A8-BB84-D1306789B68C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,7 @@ Global
 		SolutionGuid = {73FF53EA-7885-4CEB-8F4D-536BB61B1587}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\AlgernonCommons\AlgernonCommonsPatchingShared.projitems*{25aef446-6f0d-43a8-bb84-d1306789b68c}*SharedItemsImports = 13
 		..\AlgernonCommons\AlgernonCommonsPatchingShared.projitems*{a1d7207d-1e7d-4dc4-aba7-b55b00917fad}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
-using ColossalFramework;
-
+﻿// <copyright file="BuildingManagerHooks.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard), BloodyPenguin (Egor Aralov). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
 
 namespace UOCRevisited
 {
+    using System.Collections.Generic;
+    using ColossalFramework;
+
+    /// <summary>
+    /// Building utilities.
+    /// </summary>
     public static class BuildingUtil
     {
         /// <summary>
@@ -61,6 +68,10 @@ namespace UOCRevisited
             return buildingList;
         }
 
+        /// <summary>
+        /// Releases any vehicles targeting the given building.
+        /// </summary>
+        /// <param name="buildingID">Bulding ID.</param>
         public static void ReleaseTargetedVehicles(ushort buildingID)
         {
             if (buildingID < 1)
@@ -87,6 +98,10 @@ namespace UOCRevisited
 
         }
 
+        /// <summary>
+        /// Releases any vehicles owned by the given building.
+        /// </summary>
+        /// <param name="buildingID">Bulding ID.</param>
         public static void ReleaseOwnVehicles(ushort buildingID)
         {
             if (buildingID < 1)

@@ -1,11 +1,11 @@
-﻿using HarmonyLib;
-
-
-#pragma warning disable IDE0060 // Remove unused parameter
-
+﻿// <copyright file="BuildingManagerPatch.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
 
 namespace UOCRevisited.Patches
 {
+    using HarmonyLib;
     /// <summary>
     /// Harmony Postfix patch for BuildingManager.CalculateOutsideConnectionCount.
     /// </summary>
@@ -33,5 +33,3 @@ namespace UOCRevisited.Patches
         }
     }
 }
-
-#pragma warning restore IDE0060 // Remove unused parameter

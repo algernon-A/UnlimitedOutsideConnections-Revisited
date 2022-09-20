@@ -1,47 +1,46 @@
-﻿using ICities;
-using CitiesHarmony.API;
+﻿// <copyright file="Mod.cs" company="algernon (K. Algernon A. Sheppard)">
+// Copyright (c) algernon (K. Algernon A. Sheppard). All rights reserved.
+// Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
 
-
-namespace UOCRevisited
+namespace EightyOne2
 {
+    using AlgernonCommons.Patching;
+    using ColossalFramework.UI;
+    using ICities;
+
     /// <summary>
     /// The base mod class for instantiation by the game.
     /// </summary>
-    public class UOCRMod : IUserMod
+    public sealed class Mod : PatcherMod<OptionsPanel, PatcherBase>, IUserMod
     {
-        // Public mod name and description.
-        public string Name => ModName + " " + Version;
-        public string Description => "Place as many roads with outside connections as you want";
-
-
-        // Internal and private name and version components.
-        internal static string ModName => "Unlimited Outside Connections Revisited";
-        internal static string Version => BaseVersion + " " + Beta;
-        internal static string Beta => "";
-        private static string BaseVersion => "1.0.1";
-
+        /// <summary>
+        /// Gets the mod's base display name (name only).
+        /// </summary>
+        public override string BaseName => "Unlimited Outside Connections Revisited";
 
         /// <summary>
-        /// Called by the game when the mod is enabled.
+        /// Gets the mod's unique Harmony identfier.
         /// </summary>
-        public void OnEnabled()
-        {
-            // Apply Harmony patches via Cities Harmony.
-            // Called here instead of OnCreated to allow the auto-downloader to do its work prior to launch.
-            HarmonyHelper.DoOnHarmonyReady(() => Patcher.PatchAll());
-        }
-
+        public override string HarmonyID => "com.github.algernon-A.csl.uocr";
 
         /// <summary>
-        /// Called by the game when the mod is disabled.
+        /// Gets the mod's description for display in the content manager.
         /// </summary>
-        public void OnDisabled()
+        public string Description => "Removes the limit on the number of outside connections";
+
+        /// <summary>
+        /// Saves settings file.
+        /// </summary>
+        public override void SaveSettings()
         {
-            // Unapply Harmony patches via Cities Harmony.
-            if (HarmonyHelper.IsHarmonyInstalled)
-            {
-                Patcher.UnpatchAll();
-            }
         }
-    }
+
+        /// <summary>
+        /// Loads settings file.
+        /// </summary>
+        public override void LoadSettings()
+        {
+        }
+}
 }
