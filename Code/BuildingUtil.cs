@@ -117,7 +117,6 @@ namespace UOCRevisited
                 return;
             }
 
-
             // Local references.
             BuildingManager buildingManager = Singleton<BuildingManager>.instance;
             Building[] buildings = buildingManager.m_buildings.m_buffer;

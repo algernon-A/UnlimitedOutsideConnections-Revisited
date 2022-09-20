@@ -14,7 +14,7 @@ namespace UOCRevisited.Patches
     /// Harmony reverse patch to access TransportStationAI.CreateConnectionLines (private method).
     /// </summary>
     [HarmonyPatch]
-    public class TransportStationAIPatch
+    internal class TransportStationAIPatch
     {
         /// <summary>
         /// Harmony reverse patch to access TransportStationAI.CreateConnectionLines (private method).
@@ -28,7 +28,7 @@ namespace UOCRevisited.Patches
         [HarmonyPatch(new Type[] { typeof(ushort), typeof(Building) },
             new ArgumentType[] { ArgumentType.Normal, ArgumentType.Ref })]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void CreateConnectionLines(TransportStationAI ai, ushort buildingID, ref Building data)
+        internal static void CreateConnectionLines(TransportStationAI ai, ushort buildingID, ref Building data)
         {
             string message = "TransportStationAI.CreateConnectionLines reverse Harmony patch wasn't applied";
             Logging.Error(message, ai.ToString(), buildingID.ToString(), data.ToString());

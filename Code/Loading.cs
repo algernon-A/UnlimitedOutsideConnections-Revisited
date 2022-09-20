@@ -5,13 +5,18 @@
 
 namespace EightyOne2
 {
+    using System.Collections.Generic;
     using AlgernonCommons.Patching;
-    using ColossalFramework.UI;
+    using ICities;
 
     /// <summary>
     /// Main loading class: the mod runs from here.
     /// </summary>
     public sealed class Loading : PatcherLoadingBase<OptionsPanel, PatcherBase>
     {
+        /// <summary>
+        /// Gets a list of permitted loading modes.
+        /// </summary>
+        protected override List<AppMode> PermittedModes => new List<AppMode> { AppMode.Game, AppMode.MapEditor, AppMode.AssetEditor, AppMode.ScenarioEditor };
     }
 }
