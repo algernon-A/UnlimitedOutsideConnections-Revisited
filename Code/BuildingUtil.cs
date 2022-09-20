@@ -59,7 +59,9 @@ namespace UOCRevisited
                 BuildingInfo serviceInfo = buildingBuffer[buildingID].Info;
 
                 // Note that intercity bus routes need to match to roads (no direct subservice match).
-                if (buildingBuffer[buildingID].m_flags != Building.Flags.None && serviceInfo != null && ((service == ItemClass.Service.Road && serviceInfo.GetSubService() == ItemClass.SubService.PublicTransportBus) || serviceInfo.GetSubService() == subService))
+                if (buildingBuffer[buildingID].m_flags != Building.Flags.None
+                    && serviceInfo != null
+                    && ((service == ItemClass.Service.Road && serviceInfo.GetSubService() == ItemClass.SubService.PublicTransportBus) || serviceInfo.GetSubService() == subService))
                 {
                     buildingList.Add(buildingID);
                 }
@@ -69,74 +71,84 @@ namespace UOCRevisited
         }
 
         /// <summary>
-        /// Releases any vehicles targeting the given building.
+        /// Releases any vehicles travelling to/from the given building.
         /// </summary>
         /// <param name="buildingID">Bulding ID.</param>
         public static void ReleaseTargetedVehicles(ushort buildingID)
         {
-            if (buildingID < 1)
+            // Valid building check.
+            if (buildingID == 0)
             {
                 return;
             }
 
-            var ai = BuildingManager.instance.m_buildings.m_buffer[buildingID].Info?.m_buildingAI;
-            if (ai == null)
+            // Check for valud building AI.
+            BuildingAI buildingAI = BuildingManager.instance.m_buildings.m_buffer[buildingID].Info?.m_buildingAI;
+            if (buildingAI == null)
             {
                 return;
             }
 
-            var instance = Singleton<VehicleManager>.instance;
-            uint maxCount = System.Math.Min(instance.m_vehicles.m_size, 65535);
+            // Local references.
+            VehicleManager vehicleManager = Singleton<VehicleManager>.instance;
+            Vehicle[] vehicles = vehicleManager.m_vehicles.m_buffer;
 
-            for (ushort i = 1; i < maxCount; i++)
+            // Iterate through all vehicles and remove any related to this building.
+            for (ushort i = 1; i < vehicles.Length; ++i)
             {
-                if (instance.m_vehicles.m_buffer[i].m_sourceBuilding == buildingID ||
-                    instance.m_vehicles.m_buffer[i].m_targetBuilding == buildingID)
+                if (vehicles[i].m_sourceBuilding == buildingID || vehicles[i].m_targetBuilding == buildingID)
                 {
-                    instance.ReleaseVehicle(i);
+                    vehicleManager.ReleaseVehicle(i);
                 }
             }
         }
 
         /// <summary>
-        /// Releases any vehicles owned by the given building.
+        /// Clears the target of any vehicles owned by the given building.
+        /// This forces a recalculation (and possible despawning) of these vehicles.
+        /// Done this way (instead of straight release) to properly handle dummy traffic.
         /// </summary>
         /// <param name="buildingID">Bulding ID.</param>
         public static void ReleaseOwnVehicles(ushort buildingID)
         {
-            if (buildingID < 1)
+            // Valid building check.
+            if (buildingID == 0)
             {
                 return;
             }
 
-            var data = BuildingManager.instance.m_buildings.m_buffer[buildingID];
-            var buildingInfo = data.Info;
-            var ai = buildingInfo?.m_buildingAI;
-            if (ai == null)
+
+            // Local references.
+            BuildingManager buildingManager = Singleton<BuildingManager>.instance;
+            Building[] buildings = buildingManager.m_buildings.m_buffer;
+
+            // Check for valud building AI.
+            BuildingInfo buildingInfo = BuildingManager.instance.m_buildings.m_buffer[buildingID].Info;
+            BuildingAI buildingAI = buildingInfo?.m_buildingAI;
+            if (buildingAI == null)
             {
                 return;
             }
 
-            VehicleManager instance = Singleton<VehicleManager>.instance;
-            ushort vehicleID = data.m_ownVehicles;
-            int num = 0;
-            while ((int)vehicleID != 0)
+            // Local references.
+            VehicleManager vehicleManager = Singleton<VehicleManager>.instance;
+            Vehicle[] vehicles = vehicleManager.m_vehicles.m_buffer;
+
+            // Iterate through each vehicle in building's linked list.
+            ushort vehicleID = buildings[buildingID].m_ownVehicles;
+            while (vehicleID != 0)
             {
-                if ((int)instance.m_vehicles.m_buffer[(int)vehicleID].m_transportLine == 0)
+                if (vehicles[vehicleID].m_transportLine == 0)
                 {
-                    VehicleInfo info = instance.m_vehicles.m_buffer[(int)vehicleID].Info;
-                    if (info.m_class.m_service == buildingInfo.m_class.m_service && info.m_class.m_subService == buildingInfo.m_class.m_subService)
+                    // Clear the target for any vehicles owned by this building.
+                    VehicleInfo vehicleInfo = vehicles[vehicleID].Info;
+                    if (vehicleInfo.m_class.m_service == buildingInfo.m_class.m_service && vehicleInfo.m_class.m_subService == buildingInfo.m_class.m_subService)
                     {
-                        info.m_vehicleAI.SetTarget(vehicleID, ref instance.m_vehicles.m_buffer[(int)vehicleID], (ushort)0);
+                        vehicleInfo.m_vehicleAI.SetTarget(vehicleID, ref vehicles[vehicleID], 0);
                     }
                 }
 
-                vehicleID = instance.m_vehicles.m_buffer[(int)vehicleID].m_nextOwnVehicle;
-                if (++num > 16384)
-                {
-                    CODebugBase<LogChannel>.Error(LogChannel.Core, "Invalid list detected!\n" + System.Environment.StackTrace);
-                    break;
-                }
+                vehicleID = vehicles[vehicleID].m_nextOwnVehicle;
             }
         }
     }
