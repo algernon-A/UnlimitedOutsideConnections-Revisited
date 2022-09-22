@@ -6,13 +6,14 @@
 namespace EightyOne2
 {
     using System.Collections.Generic;
-    using AlgernonCommons.Patching;
+    using AlgernonCommons;
     using ICities;
 
     /// <summary>
     /// Main loading class: the mod runs from here.
+    /// Using LoadingBase instead of PatcherLoadingBase as we don't really care about the patch checks for this mod.
     /// </summary>
-    public sealed class Loading : PatcherLoadingBase<OptionsPanel, PatcherBase>
+    public sealed class Loading : LoadingBase<OptionsPanel>
     {
         /// <summary>
         /// Gets a list of permitted loading modes.

@@ -19,19 +19,20 @@ namespace UOCRevisited.Patches
         /// <summary>
         /// Harmony reverse patch to access TransportStationAI.CreateConnectionLines (private method).
         /// </summary>
-        /// <param name="ai">Builign AI instance.</param>
+        /// <param name="buildingAI">Building AI instance.</param>
         /// <param name="buildingID">Buildng ID.</param>
         /// <param name="data">Building data.</param>
         /// <exception cref="NotImplementedException">Harmony reverse patch wasn't applied.</exception>
         [HarmonyReversePatch]
         [HarmonyPatch(typeof(TransportStationAI), "CreateConnectionLines")]
-        [HarmonyPatch(new Type[] { typeof(ushort), typeof(Building) },
+        [HarmonyPatch(
+            new Type[] { typeof(ushort), typeof(Building) },
             new ArgumentType[] { ArgumentType.Normal, ArgumentType.Ref })]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        internal static void CreateConnectionLines(TransportStationAI ai, ushort buildingID, ref Building data)
+        internal static void CreateConnectionLines(TransportStationAI buildingAI, ushort buildingID, ref Building data)
         {
             string message = "TransportStationAI.CreateConnectionLines reverse Harmony patch wasn't applied";
-            Logging.Error(message, ai.ToString(), buildingID.ToString(), data.ToString());
+            Logging.Error(message, buildingAI.ToString(), buildingID.ToString(), data.ToString());
             throw new NotImplementedException(message);
         }
     }

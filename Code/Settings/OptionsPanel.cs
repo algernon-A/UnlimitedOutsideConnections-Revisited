@@ -5,10 +5,8 @@
 
 namespace EightyOne2
 {
-    using AlgernonCommons.Translation;
     using AlgernonCommons.UI;
     using ColossalFramework.UI;
-    using ICities;
 
     /// <summary>
     /// The mod's options panel.
@@ -20,20 +18,8 @@ namespace EightyOne2
         /// </summary>
         public OptionsPanel()
         {
-            // Auto layout.
-            autoLayout = true;
-            autoLayoutDirection = LayoutDirection.Vertical;
-            UIHelper helper = new UIHelper(this);
-
-            // Language options.
-            UIHelperBase languageGroup = helper.AddGroup(Translations.Translate("SET_LANGUAGE"));
-            UIDropDown languageDropDown = (UIDropDown)languageGroup.AddDropdown(Translations.Translate("SET_LANGUAGE"), Translations.LanguageList, Translations.Index, (value) =>
-            {
-                Translations.Index = value;
-                OptionsPanelManager<OptionsPanel>.LocaleChanged();
-            });
-            languageDropDown.autoSize = false;
-            languageDropDown.width = 270f;
+            UILabels.AddLabel(this, 5f, 5f, "Unlimited Outside Connections Revisited has been enabled");
+            UILabels.AddLabel(this, 5f, 25f, "Current loaded status is: " + (Loading.IsLoaded ? "loaded" : "unloaded (not in game)"));
         }
     }
 }
