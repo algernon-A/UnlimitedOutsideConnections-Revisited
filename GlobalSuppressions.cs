@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1636:File header copyright text should match", Justification = "Multi-author project", Scope = "namespace", Target = "~N:UOCRevisited")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1636:File header copyright text should match", Justification = "Multi-author open-source project", Scope = "namespace", Target = "~N:UOCRevisited")]
